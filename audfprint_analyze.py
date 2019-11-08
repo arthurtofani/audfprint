@@ -378,6 +378,7 @@ class Analyzer(object):
         self.soundfiledur = dur
         self.soundfiletotaldur += dur
         self.soundfilecount += 1
+
         return peaks
 
     def wavfile2hashes(self, filename):
