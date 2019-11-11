@@ -85,6 +85,7 @@ def landmarks2hashes(landmarks):
     the three remaining values.
     """
     landmarks = np.array(landmarks)
+    #import code; code.interact(local=dict(globals(), **locals()))
     hashes = np.zeros((landmarks.shape[0], 2), dtype=np.int32)
     hashes[:, 0] = landmarks[:, 0]
     hashes[:, 1] = (((landmarks[:, 1] & B1_MASK) << B1_SHIFT)
@@ -319,6 +320,9 @@ class Analyzer(object):
             scols = pklist[-1][0] + 1
             # Convert (col, bin) list into peaks_at[col] lists
             peaks_at = [[] for _ in xrange(scols)]
+
+
+
             for (col, bin_) in pklist:
                 peaks_at[col].append(bin_)
 
@@ -326,17 +330,28 @@ class Analyzer(object):
             for col in xrange(scols):
                 for peak in peaks_at[col]:
                     pairsthispeak = 0
-                    for col2 in xrange(col + self.mindt,
-                                       min(scols, col + self.targetdt)):
+                    for col2 in xrange(col + self.mindt, min(scols, col + self.targetdt)):
                         if pairsthispeak < self.maxpairsperpeak:
                             for peak2 in peaks_at[col2]:
                                 if abs(peak2 - peak) < self.targetdf:
-                                    # and abs(peak2-peak) + abs(col2-col) > 2 ):
                                     if pairsthispeak < self.maxpairsperpeak:
-                                        # We have a pair!
-                                        landmarks.append((col, peak,
-                                                          peak2, col2 - col))
-                                        pairsthispeak += 1
+
+                                        pairsthispeak2 = 0
+                                        for col3 in xrange(col2 + self.mindt, min(scols, col + self.targetdt)):
+                                            if pairsthispeak2 < self.maxpairsperpeak:
+                                                for peak3 in peaks_at[col3]:
+                                                    if abs(peak3 - peak2) < self.targetdf:
+                                                        if pairsthispeak2 < self.maxpairsperpeak:
+                                                            #import code; code.interact(local=dict(globals(), **locals()))
+                                                            # We have a pair!
+                                                            x = int(1000*(col2 - col)/(col3 - col))
+                                                            landmarks.append((col, (peak + peak2),
+                                                                              (peak2 + peak3), x))
+
+                                                            ##landmarks.append((col, peak,
+                                                            ##                  peak2, col2 - col))
+                                                            pairsthispeak += 1
+                                                            pairsthispeak2 += 1
 
         return landmarks
 
