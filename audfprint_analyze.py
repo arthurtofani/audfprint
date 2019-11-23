@@ -344,7 +344,11 @@ class Analyzer(object):
                                                         if pairsthispeak2 < self.maxpairsperpeak:
                                                             #import code; code.interact(local=dict(globals(), **locals()))
                                                             # We have a pair!
-                                                            x = int(100*((peak2 * peak2)/(peak * peak3)))
+                                                            nn = (peak * peak3)
+                                                            if nn==0:
+                                                                x = (peak2 * peak2)
+                                                            else:
+                                                                x = int(100*((peak2 * peak2)/nn))
                                                             landmarks.append((col, x, 0, 0))
 
                                                             ##landmarks.append((col, peak,
