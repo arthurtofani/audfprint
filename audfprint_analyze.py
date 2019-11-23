@@ -342,13 +342,13 @@ class Analyzer(object):
                                                 for peak3 in peaks_at[col3]:
                                                     if abs(peak3 - peak2) < self.targetdf:
                                                         if pairsthispeak2 < self.maxpairsperpeak:
-                                                            #import code; code.interact(local=dict(globals(), **locals()))
                                                             # We have a pair!
                                                             nn = (peak * peak3)
                                                             if nn==0:
                                                                 x = (peak2 * peak2)
                                                             else:
                                                                 x = int(100*((peak2 * peak2)/nn))
+                                                            import code; code.interact(local=dict(globals(), **locals()))
                                                             landmarks.append((col, x, 0, 0))
 
                                                             ##landmarks.append((col, peak,
