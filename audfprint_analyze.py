@@ -342,15 +342,24 @@ class Analyzer(object):
                                                 for peak3 in peaks_at[col3]:
                                                     if abs(peak3 - peak2) < self.targetdf:
                                                         if pairsthispeak2 < self.maxpairsperpeak:
-                                                            #import code; code.interact(local=dict(globals(), **locals()))
-                                                            # We have a pair!
-                                                            x = int(10*(col2 - col)/(col3 - col))
-                                                            landmarks.append((col, peak, peak2, peak3))
+                                                            pairsthispeak3 = 0
+                                                            for col4 in xrange(col3 + self.mindt, min(scols, col + self.targetdt)):
+                                                                if pairsthispeak3 < self.maxpairsperpeak:
+                                                                    for peak4 in peaks_at[col4]:
+                                                                        if abs(peak4 - peak3) < self.targetdf:
+                                                                            if pairsthispeak3 < self.maxpairsperpeak:
 
-                                                            ##landmarks.append((col, peak,
-                                                            ##                  peak2, col2 - col))
-                                                            pairsthispeak += 1
-                                                            pairsthispeak2 += 1
+
+                                                                                #import code; code.interact(local=dict(globals(), **locals()))
+                                                                                # We have a pair!
+                                                                                x = int(10*(col2 - col)/(col3 - col))
+                                                                                landmarks.append((col, peak, peak2, peak4))
+
+                                                                                ##landmarks.append((col, peak,
+                                                                                ##                  peak2, col2 - col))
+                                                                                pairsthispeak += 1
+                                                                                pairsthispeak2 += 1
+                                                                                pairsthispeak3 += 1
 
         return landmarks
 
