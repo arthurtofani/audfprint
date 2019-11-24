@@ -347,9 +347,10 @@ class Analyzer(object):
                                                             if nn==0:
                                                                 x = (peak2 * peak2)
                                                             else:
-                                                                x = int(100*((peak2 * peak2)/nn))
-                                                            import code; code.interact(local=dict(globals(), **locals()))
-                                                            #landmarks.append((col, x, 0, 0))
+                                                                x = int(10*((peak2 * peak2)/nn))
+
+                                                            #print(x, peak, peak2, peak3)
+                                                            landmarks.append((col, x, x, x))
 
                                                             ##landmarks.append((col, peak,
                                                             ##                  peak2, col2 - col))
