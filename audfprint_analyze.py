@@ -88,10 +88,12 @@ def landmarks2hashes(landmarks):
     #import code; code.interact(local=dict(globals(), **locals()))
     hashes = np.zeros((landmarks.shape[0], 2), dtype=np.int32)
     hashes[:, 0] = landmarks[:, 0]
-    hashes[:, 1] = (((landmarks[:, 1] & B1_MASK) << B1_SHIFT)
-                    | (((landmarks[:, 2] - landmarks[:, 1]) & DF_MASK)
-                       << DF_SHIFT)
-                    | (landmarks[:, 3] & DT_MASK))
+#    hashes[:, 1] = (((landmarks[:, 1] & B1_MASK) << B1_SHIFT)
+#                    | (((landmarks[:, 2] - landmarks[:, 1]) & DF_MASK)
+#                       << DF_SHIFT)
+#                    | (landmarks[:, 3] & DT_MASK))
+    #import code; code.interact(local=dict(globals(), **locals()))
+    hashes[:, 1] = landmarks[:, 3]
     return hashes
 
 
@@ -347,10 +349,11 @@ class Analyzer(object):
                                                             if nn==0:
                                                                 x = (peak2 * peak2)
                                                             else:
-                                                                x = int(10*((peak2 * peak2)/nn))
+                                                                x = int(100000*((peak2 * peak2)/nn))
 
-                                                            #print(x, peak, peak2, peak3)
-                                                            landmarks.append((col, x, x, x))
+                                                            #import code; code.interact(local=dict(globals(), **locals()))
+                                                            print(x, peak, peak2, peak3)
+                                                            landmarks.append((col, 1, 1, x))
 
                                                             ##landmarks.append((col, peak,
                                                             ##                  peak2, col2 - col))
@@ -438,6 +441,7 @@ class Analyzer(object):
                 (unique_hash_hash & ((1 << 32) - 1))[:, np.newaxis]
             ]).astype(np.int32)
             hashes = unique_hashes
+            #import code; code.interact(local=dict(globals(), **locals()))
             # Or simply np.unique(query_hashes, axis=0) for numpy >= 1.13
 
         # print("wavfile2hashes: read", len(hashes), "hashes from", filename)
